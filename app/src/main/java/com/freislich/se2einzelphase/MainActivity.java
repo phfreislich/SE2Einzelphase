@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         client=new Client(myObserver);
-
+        editText= (EditText) findViewById(R.id.editText);
+        textView=findViewById(R.id.textView3);
     }
     private Observer myObserver = new Observer<String>() {
         @Override
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onNext(@NonNull String s) {
-            textView=findViewById(R.id.textView3);
             textView.setText(s);
         }
 
@@ -48,8 +48,25 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     public void send(View view){
-        editText= (EditText) findViewById(R.id.editText);
         Observable<String> myobs = client.sendMessage(editText.getText().toString());
         myobs.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(myObserver);
+    }
+    public void calc(View view){
+        textView.setText(task1(editText.getText().toString()));
+    }
+    public String task1(String matr){
+        char[] arr= matr.toCharArray();
+        matr="";
+        for(int i=0;i<arr.length;i++){
+            if(i%2==1){
+                if(arr[i]!='0'){
+                    arr[i]=(char)(arr[i]+48);
+                }else{
+                    arr[i]='j';
+                }
+            }
+            matr+=arr[i];
+        }
+        return matr;
     }
 }
