@@ -15,7 +15,7 @@ public class Client {
     private Observer observer;
     private String addr;
     private int port;
-
+// test
     Client(Observer observer){
         this.observer=observer;
         this.addr="se2-isys.aau.at";
